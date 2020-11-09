@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Price Prediction</title>
+</head>
+<body>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <a>Total Sqft : </a><input type="number" name="sqft" value="{{ sqft }}" required><br><br>
+        <a>BHK : </a><input type="number" name="bhk" value="{{ bhk }}" required><br><br>
+        <a>Bathroom : </a><input type="number" name="bathroom" value="{{ bathroom }}" required><br><br>
+        <a>Select Location : </a>
+        <select name="location" required>
+            
+            {% if location %}
+                {% else %}
+                <option selected disabled>-- Select A Location From Below List --</option>
+            {% endif %}
+                
+            {% for i in columns_list %}
+            {% if i == location %}
+            <option value="{{ i }}" selected>{{ i }}</option>
+            {% else %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endif %}
+            {% endfor %}
+                <option value="other">Other</option>
+        </select>
+        <br><br>
+        <button type="submit">Let's Predict</button>
+    </form>
+    
+    {% if predicted %}
+        <h3>The estimated price is {{ predicted }} Lacs</h3>
+    {% endif %}
+        
+</body>
+</html>
